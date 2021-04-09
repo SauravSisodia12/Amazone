@@ -10,11 +10,10 @@ import com.amazone.services.ProductServicesImple;
 
 public class Admin {
 	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);	
+	Scanner sc = new Scanner(System.in);	
 
 	ProductServices ps = new ProductServicesImple();
-	
+	public void adminFunctions() {
 	try {
 		System.out.println("Admin Login");
 		System.out.print("Enter Username = ");
@@ -79,6 +78,5 @@ public class Admin {
 			} catch(UserNotFoundException | IdNotFoundException e) {
 				System.err.println(e.getMessage());
 			}
-			sc.close();
-		}
+}
 	}

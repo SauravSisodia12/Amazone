@@ -28,9 +28,10 @@ public class UserDAOImple implements UserDAO {
 			while(rs.next()) {
 				username = rs.getString("userId");
 				password = rs.getString("password");
+				if(username.equalsIgnoreCase(userId)&&(password.equalsIgnoreCase(Password)))
+					result = 1;
 				}
-			if(username.equalsIgnoreCase(userId)&&(password.equalsIgnoreCase(Password)))
-				result = 1;
+		
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -81,7 +82,7 @@ public class UserDAOImple implements UserDAO {
 
 	public List<ProductDetails> findAllProducts() {
 		
-		String sql = "select * from products";
+		String sql = "select * from product";
 		Connection connection = DBConnection.openConnection();
 		PreparedStatement statement = null;
 		List<ProductDetails> allProductsList = new ArrayList<>();
@@ -94,7 +95,7 @@ public class UserDAOImple implements UserDAO {
 			String brand = rs.getString("brand");
 			String category = rs.getString("category");
 			double price = rs.getDouble("price");
-			ProductDetails product = new ProductDetails(name, productId, brand, category, price);
+			ProductDetails product = new ProductDetails(productId, name, brand, category, price);
 			allProductsList .add(product);
 			
 		}
@@ -114,7 +115,7 @@ public class UserDAOImple implements UserDAO {
 
 	public List<ProductDetails> findProductByCategory(String category){
 		
-		String sql = "select * from products where category = ?";
+		String sql = "select * from product where category = ?";
 		Connection connection = DBConnection.openConnection();
 		PreparedStatement statement = null;
 		List<ProductDetails> productsListByCategory = new ArrayList<>();
@@ -128,7 +129,7 @@ public class UserDAOImple implements UserDAO {
 			String brand = rs.getString("brand");
 			String ucategory = rs.getString("category");
 			double price = rs.getDouble("price");
-			ProductDetails product = new ProductDetails(name, productId, brand, ucategory, price);
+			ProductDetails product = new ProductDetails(productId, name, brand, ucategory, price);
 			productsListByCategory .add(product);
 			
 			}
@@ -154,7 +155,7 @@ public class UserDAOImple implements UserDAO {
 	@Override
 	public List<ProductDetails> findProductByBrand(String brand) {
 		
-		String sql = "select * from products where brand = ?";
+		String sql = "select * from product where brand = ?";
 		Connection connection = DBConnection.openConnection();
 		PreparedStatement statement = null;
 		List<ProductDetails> productsListByBrand = new ArrayList<>();
@@ -168,7 +169,7 @@ public class UserDAOImple implements UserDAO {
 			String ubrand = rs.getString("brand");
 			String ucategory = rs.getString("category");
 			double price = rs.getDouble("price");
-			ProductDetails product = new ProductDetails(name, productId, ubrand, ucategory, price);
+			ProductDetails product = new ProductDetails(productId, name, ubrand, ucategory, price);
 			productsListByBrand.add(product);
 			}
 		} catch(SQLException e) {

@@ -12,14 +12,17 @@ import com.amazone.services.UserServicesImple;
 
 public class User {
 	
-	public static void main(String[] args) {
-	
 	Scanner sc = new Scanner(System.in);
 	UserServices us = new UserServicesImple();
+	
+	public void userFunctions() {
+		
 	System.out.println("Enter your choice (1 or 2) = ");
 	System.out.println("1 = Register");
 	System.out.println("2 = login");
+	System.out.print("Choice = ");
 	int choice = sc.nextInt();
+	System.out.println();
 	
 	if(choice == 1) {
 	System.out.println("Enter userId, name, password, mailId, MobileNo, Address :");
@@ -100,6 +103,6 @@ public class User {
 			System.out.println(e.getMessage());
 			}
 		}
-			sc.close();
-	}
+}
+	
 }
