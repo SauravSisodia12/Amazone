@@ -48,6 +48,7 @@ public class User {
 			int result = us.login(lName, lPass);
 			if(result == 1)
 			{
+				System.out.println();
 				System.out.println("Successfully Logged in....");
 				System.out.println();
 				System.out.println("Enter your choice (1 to 4) to proceed = ");
@@ -94,7 +95,7 @@ public class User {
 						us.ViewProductByPrice(priceChoice).stream().forEach(System.out::println);
 						}
 					}
-				} 
+				}
 			} catch ( UserNotFoundException | CategoryNotFoundException | BrandNotFoundException   e) {
 			System.out.println(e.getMessage());
 			}

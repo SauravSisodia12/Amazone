@@ -16,8 +16,8 @@ public class UserServicesImple implements UserServices {
 
 	UserDAO userDAO = new UserDAOImple();
 	
-	public int login(String userName, String Password) throws UserNotFoundException {
-		int result = userDAO.DAOlogin(userName, Password);
+	public int login(String userId, String Password) throws UserNotFoundException {
+		int result = userDAO.DAOlogin(userId, Password);
 		if(result == 0)
 			throw new UserNotFoundException("User Not Found");
 		else {

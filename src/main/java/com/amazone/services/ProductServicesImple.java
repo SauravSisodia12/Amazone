@@ -1,17 +1,25 @@
 package com.amazone.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.amazone.dao.ProductDAO;
 import com.amazone.dao.ProductDAOImple;
 import com.amazone.exception.IdNotFoundException;
+import com.amazone.exception.UserNotFoundException;
 import com.amazone.model.ProductDetails;
 
 public class ProductServicesImple implements ProductServices {
 	
 	ProductDAO productDAO = new ProductDAOImple();
 	
-	public void login(String userName, String password) {
-		// TODO Auto-generated method stub
-		
+	public int login(String userName, String password) throws UserNotFoundException {
+		int result = productDAO.DAOlogin(userName, password);
+		if(result == 0)
+			throw new UserNotFoundException("Admin Not Found");
+		else {
+			return result;
+		}	
 	}
 
 	public void addProduct(ProductDetails productDetails) {
@@ -19,14 +27,25 @@ public class ProductServicesImple implements ProductServices {
 		
 	}
 
-	public void updateProduct(int ProductId, double price) throws IdNotFoundException {
-		productDAO.updateOneProduct(ProductId, price);
+	public void updateProduct(int productId, double price) throws IdNotFoundException {
+		int result = productDAO.updateOneProduct(productId, price);
+		if(result == 0)
+			throw new IdNotFoundException("Invalid ID for Updating Book");
 		
 	}
 
-	public void deleteProduct(int ProductId) throws IdNotFoundException {
-		productDAO.deleteOneProduct(ProductId);
+	public void deleteProduct(int productId) throws IdNotFoundException {
+		int result = productDAO.deleteOneProduct(productId);
+		if(result == 0)
+			throw new IdNotFoundException("ID not Found for Delete");
 		
+	}
+
+	@Override
+	public List<ProductDetails> viewAllProduct() {
+		return productDAO.findAllProduct().stream()
+				.sorted((p1,p2)->p1.getProductCategory().compareToIgnoreCase(p2.getProductCategory()))
+				.collect(Collectors.toList());
 	}
 
 	

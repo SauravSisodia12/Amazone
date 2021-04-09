@@ -12,9 +12,9 @@ import com.amazone.model.UserDetails;
 
 public class UserDAOImple implements UserDAO {
 
-	public int DAOlogin(String userName, String Password){
+	public int DAOlogin(String userId, String Password){
 		
-		String sql = "select name,password from userdetails where name = ? and password = ?";	
+		String sql = "select userId , password from userdetails where userId = ? and password = ?";	
 		Connection connection = DBConnection.openConnection();
 		PreparedStatement statement = null;
 		int result = 0;
@@ -22,14 +22,14 @@ public class UserDAOImple implements UserDAO {
 		String password = null;
 		try {
 			statement = connection.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			statement.setString(1, userName);
+			statement.setString(1, userId);
 			statement.setString(2, Password);
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
 				username = rs.getString("userId");
 				password = rs.getString("password");
 				}
-			if(username.equalsIgnoreCase(userName)&&(password.equalsIgnoreCase(Password)))
+			if(username.equalsIgnoreCase(userId)&&(password.equalsIgnoreCase(Password)))
 				result = 1;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
