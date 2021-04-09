@@ -13,7 +13,7 @@ public class DBConnection {
 //			String sql = "CREATE TABLE userdetails (userId varchar(20) primary key, name varchar(20), password varchar(20), mailid varchar(20),"
 //					      +"mobileno integer NOT NULL, address varchar(20), wallet decimal)";
 			
-//			String sql2 = "CREATE TABLE products (name varchar(20), productid integer PRIMARY KEY,"
+//			String sql2 = "CREATE TABLE product ( proid integer PRIMARY KEY,name varchar(20),"
 //				      +"brand varchar(20), category varchar(20) NOT NULL, price decimal)";
 			String url = "jdbc:oracle:thin:@localhost:1521:xe";
 			String username = "system";
@@ -39,7 +39,7 @@ public class DBConnection {
 				}catch(SQLException e) {
 				e.printStackTrace();
 				}
-			System.out.println("Connection Closed");
+			
 		}
 	
 }

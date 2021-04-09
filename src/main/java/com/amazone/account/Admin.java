@@ -37,13 +37,10 @@ public class Admin {
 			System.out.println();
 			
 			if(uchoice == 1) {
-				System.out.println();
 				System.out.println("All Products");
 				ps.viewAllProduct().stream().forEach(System.out::println);
 			}
 			else if(uchoice ==2) {
-				System.out.println("Adding Product");
-				System.out.println();
 				System.out.println("Enter Product details : ");
 				System.out.print("Enter Product Name = ");
 				String name= sc.next();
@@ -56,14 +53,13 @@ public class Admin {
 				System.out.print("Enter Price = ");
 				double price = sc.nextDouble();
 				
-				ProductDetails productDetails = new ProductDetails(name,productId,brand,category,price);
+				ProductDetails productDetails = new ProductDetails(productId,name,brand,category,price);
 				ps.addProduct(productDetails);
 				System.out.println();
 				System.out.println("Product Added");
 			}
 			else if(uchoice == 3) {
 				System.out.println("Updating Product");
-				System.out.println();
 				System.out.print("Enter ProductId = ");
 				int productId = sc.nextInt();
 				System.out.print("Enter Price to be updated = ");
@@ -73,7 +69,6 @@ public class Admin {
 			}
 			else if(uchoice == 4) {
 				System.out.println("Deleting Product");
-				System.out.println();
 				System.out.print("Enter ProductId = ");
 				int productId = sc.nextInt();
 				System.out.println();
@@ -82,7 +77,7 @@ public class Admin {
 	
 		}
 			} catch(UserNotFoundException | IdNotFoundException e) {
-				System.out.println(e.getMessage());
+				System.err.println(e.getMessage());
 			}
 			sc.close();
 		}

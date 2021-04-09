@@ -8,7 +8,7 @@ public class ProductDetails {
 	private String productCategory;
 	private Double price;
 	
-	public ProductDetails(String productName, Integer productId, String brandName, String productCategory,
+	public ProductDetails(Integer productId, String productName, String brandName, String productCategory,
 			Double price) {
 		super();
 		this.productName = productName;

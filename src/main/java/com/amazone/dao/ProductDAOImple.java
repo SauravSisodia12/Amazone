@@ -47,13 +47,13 @@ public class ProductDAOImple implements ProductDAO {
 
 	public void addoOneProduct(ProductDetails productDetails) {
 
-		String sql = "insert into products values(?,?,?,?,?)";	
+		String sql = "insert into product values(?,?,?,?,?)";	
 		Connection connection = DBConnection.openConnection();
 		PreparedStatement statement = null;
 		try {
 			statement = connection.prepareStatement(sql);
-			statement.setString(1, productDetails.getProductName());
-			statement.setInt(2, productDetails.getProductId());
+			statement.setInt(1, productDetails.getProductId());
+			statement.setString(2, productDetails.getProductName());
 			statement.setString(3, productDetails.getBrandName());
 			statement.setString(4, productDetails.getProductCategory());
 			statement.setDouble(5, productDetails.getPrice());
@@ -73,7 +73,7 @@ public class ProductDAOImple implements ProductDAO {
 
 	public int updateOneProduct(int ProductId, double price){
 		
-		String sql = "update products set price = ? where productid = ?";
+		String sql = "update product set price = ? where proid = ?";
 		Connection connection = DBConnection.openConnection();
 		PreparedStatement statement = null;
 		int result = 0;
@@ -101,7 +101,7 @@ public class ProductDAOImple implements ProductDAO {
 
 	public int deleteOneProduct(int ProductId) {
 		
-		String sql = "delete from products where productid = ?";
+		String sql = "delete from product where proId = ?";
 		Connection connection = DBConnection.openConnection();
 		PreparedStatement statement = null;
 		int result = 0;
@@ -129,7 +129,7 @@ public class ProductDAOImple implements ProductDAO {
 	@Override
 	public List<ProductDetails> findAllProduct() {
 		
-		String sql = "select * from products";
+		String sql = "select * from product";
 		Connection connection = DBConnection.openConnection();
 		PreparedStatement statement = null;
 		List<ProductDetails> productList = new ArrayList<>();
@@ -137,12 +137,12 @@ public class ProductDAOImple implements ProductDAO {
 			statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
+				int proId = rs.getInt("proId");
 				String name = rs.getString("name");
-				int proId = rs.getInt("productid");
 				String brand = rs.getString("brand");
 				String category = rs.getString("category");
 				Double price = rs.getDouble("price");
-				ProductDetails product = new ProductDetails(name, proId, brand, category, price);
+				ProductDetails product = new ProductDetails(proId,name, brand, category, price);
 				productList.add(product);
 			}
 

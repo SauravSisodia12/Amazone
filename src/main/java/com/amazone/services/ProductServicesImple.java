@@ -13,8 +13,8 @@ public class ProductServicesImple implements ProductServices {
 	
 	ProductDAO productDAO = new ProductDAOImple();
 	
-	public int login(String userName, String password) throws UserNotFoundException {
-		int result = productDAO.DAOlogin(userName, password);
+	public int login(String userId, String password) throws UserNotFoundException {
+		int result = productDAO.DAOlogin(userId, password);
 		if(result == 0)
 			throw new UserNotFoundException("Admin Not Found");
 		else {
@@ -37,7 +37,7 @@ public class ProductServicesImple implements ProductServices {
 	public void deleteProduct(int productId) throws IdNotFoundException {
 		int result = productDAO.deleteOneProduct(productId);
 		if(result == 0)
-			throw new IdNotFoundException("ID not Found for Delete");
+			throw new IdNotFoundException("ID Not Found for Deletion");
 		
 	}
 
@@ -46,7 +46,5 @@ public class ProductServicesImple implements ProductServices {
 		return productDAO.findAllProduct().stream()
 				.sorted((p1,p2)->p1.getProductCategory().compareToIgnoreCase(p2.getProductCategory()))
 				.collect(Collectors.toList());
-	}
-
-	
+	}	
 }
