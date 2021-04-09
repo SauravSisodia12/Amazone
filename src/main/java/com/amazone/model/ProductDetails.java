@@ -11,7 +11,7 @@ public class ProductDetails {
 	public ProductDetails(Integer productId, String productName, String brandName, String productCategory,
 			Double price) {
 		super();
-		this.productName = productName;
+		this.productName = productName ;
 		this.productId = productId;
 		this.brandName = brandName;
 		this.productCategory = productCategory;
