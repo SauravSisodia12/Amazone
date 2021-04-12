@@ -13,7 +13,7 @@ public class Main {
 		Admin admin = new Admin();
 		User user = new User();
 		
-		System.out.println("User OR Admin :");
+		System.out.println("User OR Admin : ");
 		System.out.println();
 		System.out.print("Enter your choice = ");
 		String choice = sc.next();
