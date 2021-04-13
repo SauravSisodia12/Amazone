@@ -9,10 +9,11 @@ public interface UserDAO {
 
 	public int DAOlogin(String userName,String password);
 	public void DAOregister(UserDetails userdetails);
-	public int DAOaddMoney(int amount);
+	public int DAOaddMoney(int amount, String userid);
+	public int checkBalance(String userid);
+	public void generateBill(List<Integer> ProdIds);
 	
 	List<ProductDetails> findAllProducts();
 	List<ProductDetails> findProductByCategory(String category);
 	List<ProductDetails> findProductByBrand(String brand); 
-	List<ProductDetails> moveToCart();
 }

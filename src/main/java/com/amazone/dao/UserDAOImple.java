@@ -75,8 +75,40 @@ public class UserDAOImple implements UserDAO {
 			}	
 	}
 
-	public int DAOaddMoney(int amount) {
-		return 0;
+	public int DAOaddMoney(int amount, String userid) {
+		
+		String sql = "update userdetails set wallet = ? where userId = ?";
+		String sql2 = "select wallet from userdetails where userId = ?";
+		Connection connection = DBConnection.openConnection();
+		PreparedStatement statement = null;
+		int result = 0;
+		int walletAmount = 0;
+		try {
+			statement = connection.prepareStatement(sql2,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			statement.setString(1, userid);
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				walletAmount = rs.getInt("wallet");
+				}
+			statement.close();
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, walletAmount + amount);
+			statement.setString(2, userid);
+			result = statement.executeUpdate();
+			if (result == 1)
+				System.out.println("Updated Wallet Balance = "+(walletAmount+amount)+"\n");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (statement != null)
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+			DBConnection.closeConnection();
+		}
+		return result;
 		
 	}
 
@@ -90,8 +122,8 @@ public class UserDAOImple implements UserDAO {
 		statement = connection.prepareStatement(sql);
 		ResultSet rs = statement.executeQuery();
 		while(rs.next()) {
+			int productId = rs.getInt("proId");
 			String name = rs.getString("name");
-			int productId = rs.getInt("productId");
 			String brand = rs.getString("brand");
 			String category = rs.getString("category");
 			double price = rs.getDouble("price");
@@ -124,8 +156,8 @@ public class UserDAOImple implements UserDAO {
 		statement.setString(1, category);
 		ResultSet rs = statement.executeQuery();
 		while(rs.next()) {
+			int productId = rs.getInt("proId");
 			String name = rs.getString("name");
-			int productId = rs.getInt("productId");
 			String brand = rs.getString("brand");
 			String ucategory = rs.getString("category");
 			double price = rs.getDouble("price");
@@ -147,11 +179,6 @@ public class UserDAOImple implements UserDAO {
 		return productsListByCategory;
 	}
 
-	public List<ProductDetails> moveToCart() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public List<ProductDetails> findProductByBrand(String brand) {
 		
@@ -164,8 +191,8 @@ public class UserDAOImple implements UserDAO {
 		statement.setString(1, brand);
 		ResultSet rs = statement.executeQuery();
 		while(rs.next()) {
+			int productId = rs.getInt("proId");
 			String name = rs.getString("name");
-			int productId = rs.getInt("productId");
 			String ubrand = rs.getString("brand");
 			String ucategory = rs.getString("category");
 			double price = rs.getDouble("price");
@@ -184,6 +211,70 @@ public class UserDAOImple implements UserDAO {
 			DBConnection.closeConnection();
 			}
 		return productsListByBrand;
+	}
+
+	@Override
+	public int checkBalance(String userid) {
+		
+		String sql = "select wallet from userdetails where userId = ?";	
+		Connection connection = DBConnection.openConnection();
+		PreparedStatement statement = null;
+		int walletBalance = 0;
+		try {
+			statement = connection.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			statement.setString(1, userid);
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				walletBalance = rs.getInt("wallet");
+				}
+		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if(statement!=null)
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+			DBConnection.closeConnection();
+			}
+		return walletBalance;		
+	}
+
+	@Override
+	public void generateBill(List<Integer> ProdIds) {
+		int totalBill = 0;
+		for (int i = 0; i < ProdIds.size(); i++) {
+			int price;
+			String sql = "select name,price from product where proId = ?";	
+			Connection connection = DBConnection.openConnection();
+			PreparedStatement statement = null;
+			try {
+				statement = connection.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+				statement.setInt(1, ProdIds.get(i));
+				ResultSet rs = statement.executeQuery();
+				while(rs.next()) {
+					price = rs.getInt("price");
+					String name = rs.getString("name");
+					totalBill = totalBill + price;
+					System.out.println(name+" = "+price);
+					}
+			
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			} finally {
+				if(statement!=null)
+					try {
+						statement.close();
+					} catch (SQLException e) {
+						System.out.println(e.getMessage());
+					}
+				DBConnection.closeConnection();
+				}
+		}	
+		System.out.println();
+		System.out.println("Total Bill = "+totalBill);
 	}
 
 

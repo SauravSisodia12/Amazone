@@ -30,8 +30,8 @@ public class UserServicesImple implements UserServices {
 		
 	}
 
-	public void addMoney(int amount) {
-		userDAO.DAOaddMoney(amount);
+	public int addMoney(int amount, String userid) {
+		return userDAO.DAOaddMoney(amount,userid);
 		
 	}
 
@@ -63,15 +63,22 @@ public class UserServicesImple implements UserServices {
 					.collect(Collectors.toList());
 	}
 
-	public List<ProductDetails> addToCart() {
-		return null;
-	}
-
 	public List<ProductDetails> ViewProductByBrand(String brand) throws BrandNotFoundException {
 		List<ProductDetails> productListByBrand = userDAO.findProductByBrand(brand);
 		if(productListByBrand.isEmpty())
 			throw new BrandNotFoundException("Brand Not Found");
 		return productListByBrand;
+	}
+
+	@Override
+	public int checkBalance(String userid) {
+		return userDAO.checkBalance(userid);
+	}
+
+	@Override
+	public void generateBill(List<Integer> ProdIds) {
+		userDAO.generateBill(ProdIds);
+	
 	}
 
 	
