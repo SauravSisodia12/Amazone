@@ -96,7 +96,7 @@ public class User {
 							userFunctions();
 						}
 					else
-						System.out.println("Thanks to Visit");
+						System.out.println("Thanks for Visiting");
 				}
 				else if(uchoice == 2) {
 					System.out.println();
@@ -116,7 +116,7 @@ public class User {
 							userFunctions();
 						}
 					else
-						System.out.println("Thanks to Visit");
+						System.out.println("Thanks for Visiting");
 				}
 				else if(uchoice == 3) {
 					System.out.println();
@@ -136,7 +136,7 @@ public class User {
 							userFunctions();
 						}
 					else
-						System.out.println("Thanks to Visit");
+						System.out.println("Thanks for Visiting");
 				}
 				else if(uchoice == 4) {
 					System.out.println();
@@ -161,7 +161,7 @@ public class User {
 								userFunctions();
 							}
 						else
-							System.out.println("Thanks to Visit");
+							System.out.println("Thanks for Visiting");
 					}
 					else if(priceChoice == 2) {
 						System.out.println();
@@ -179,7 +179,7 @@ public class User {
 								userFunctions();
 							}
 						else
-							System.out.println("Thanks to Visit");
+							System.out.println("Thanks for Visiting");
 						}
 					}
 				else if(uchoice == 5) {
@@ -194,7 +194,7 @@ public class User {
 							userFunctions();
 						}
 					else
-						System.out.println("Thanks to Visit");
+						System.out.println("Thanks for Visiting");
 				}
 				}
 			} catch ( UserNotFoundException | CategoryNotFoundException | BrandNotFoundException   e) {

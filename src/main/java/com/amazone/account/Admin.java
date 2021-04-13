@@ -56,6 +56,15 @@ public class Admin {
 				ps.addProduct(productDetails);
 				System.out.println();
 				System.out.println("Product Added");
+				System.out.println();
+				System.out.print("Do you want to continue :");
+				String option = sc.next();
+				if(option.equalsIgnoreCase("yes"))
+					{	System.out.println();
+						adminFunctions();
+					}
+				else
+					System.out.println("Thanks for Visiting");
 			}
 			else if(uchoice == 3) {
 				System.out.println("Updating Product");
@@ -65,6 +74,15 @@ public class Admin {
 				double price = sc.nextDouble();
 				System.out.println();
 				ps.updateProduct(productId,price);
+				System.out.println();
+				System.out.print("Do you want to continue :");
+				String option = sc.next();
+				if(option.equalsIgnoreCase("yes"))
+					{	System.out.println();
+						adminFunctions();
+					}
+				else
+					System.out.println("Thanks for Visiting");
 			}
 			else if(uchoice == 4) {
 				System.out.println("Deleting Product");
@@ -72,11 +90,20 @@ public class Admin {
 				int productId = sc.nextInt();
 				System.out.println();
 				ps.deleteProduct(productId);
+				System.out.println();
+				System.out.print("Do you want to continue :");
+				String option = sc.next();
+				if(option.equalsIgnoreCase("yes"))
+					{	System.out.println();
+						adminFunctions();
+					}
+				else
+					System.out.println("Thanks for Visiting");
 				}
 	
-		}
-			} catch(UserNotFoundException | IdNotFoundException e) {
+					}
+				} catch(UserNotFoundException | IdNotFoundException e) {
 				System.err.println(e.getMessage());
 			}
-}
+		}
 	}
