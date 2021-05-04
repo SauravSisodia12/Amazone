@@ -61,7 +61,7 @@ public class UserDAOImple implements UserDAO {
 			statement.setString(6, userdetails.getAddress());
 			statement.setDouble(7, userdetails.getWallet());
 			statement.execute();
-			System.out.println("Row Inserted");
+			System.out.println("Successfully Registered");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -96,7 +96,7 @@ public class UserDAOImple implements UserDAO {
 			statement.setString(2, userid);
 			result = statement.executeUpdate();
 			if (result == 1)
-				System.out.println("Updated Wallet Balance = "+(walletAmount+amount)+"\n");
+				System.out.print(userid+"'s Updated Wallet Balance = "+(walletAmount+amount)+"\n");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -243,16 +243,16 @@ public class UserDAOImple implements UserDAO {
 	}
 
 	@Override
-	public void generateBill(List<Integer> ProdIds) {
+	public int generateBill(int...ProdIds) {
 		int totalBill = 0;
-		for (int i = 0; i < ProdIds.size(); i++) {
+		for (int i = 0; i < ProdIds.length; i++) {
 			int price;
 			String sql = "select name,price from product where proId = ?";	
 			Connection connection = DBConnection.openConnection();
 			PreparedStatement statement = null;
 			try {
 				statement = connection.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-				statement.setInt(1, ProdIds.get(i));
+				statement.setInt(1, ProdIds[i]);
 				ResultSet rs = statement.executeQuery();
 				while(rs.next()) {
 					price = rs.getInt("price");
@@ -273,8 +273,44 @@ public class UserDAOImple implements UserDAO {
 				DBConnection.closeConnection();
 				}
 		}	
-		System.out.println();
-		System.out.println("Total Bill = "+totalBill);
+		return totalBill;
+		
+	}
+
+	@Override
+	public int updateWalletBalance(String userid, int amount) {
+		String sql = "update userdetails set wallet = ? where userId = ?";
+		String sql2 = "select wallet from userdetails where userId = ?";
+		Connection connection = DBConnection.openConnection();
+		PreparedStatement statement = null;
+		int result = 0;
+		int walletAmount = 0;
+		try {
+			statement = connection.prepareStatement(sql2,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			statement.setString(1, userid);
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				walletAmount = rs.getInt("wallet");
+				}
+			statement.close();
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, walletAmount - amount);
+			statement.setString(2, userid);
+			result = statement.executeUpdate();
+			if (result == 1)
+				System.out.print(userid+"'s Updated Wallet Balance = "+(walletAmount-amount)+"\n");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (statement != null)
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+			DBConnection.closeConnection();
+		}
+		return result;
 	}
 
 

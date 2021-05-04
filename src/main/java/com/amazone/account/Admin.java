@@ -13,7 +13,8 @@ public class Admin {
 	Scanner sc = new Scanner(System.in);	
 
 	ProductServices ps = new ProductServicesImple();
-	public void adminFunctions() {
+	
+	public void adminLogin() {
 	try {
 		System.out.println("Admin Login");
 		System.out.print("Enter Username = ");
@@ -25,6 +26,16 @@ public class Admin {
 		{
 			System.out.println();
 			System.out.println("Successfully Logged in as Admin......");
+			adminFunctions();
+		}
+			} catch(UserNotFoundException e) {
+					System.err.println(e.getMessage());
+			}
+	}
+	
+	public void adminFunctions() {
+		try {
+	
 			System.out.println();
 			System.out.println("Enter your choice (1 to 3) to proceed = ");
 			System.out.println("1. View All Products");
@@ -38,6 +49,15 @@ public class Admin {
 			if(uchoice == 1) {
 				System.out.println("All Products");
 				ps.viewAllProduct().stream().forEach(System.out::println);
+				System.out.println();
+				System.out.print("Do you want to continue :");
+				String option = sc.next();
+				if(option.equalsIgnoreCase("yes"))
+					{	System.out.println();
+						adminFunctions();
+					}
+				else
+					System.out.println("Thanks for Visiting");
 			}
 			else if(uchoice ==2) {
 				System.out.println("Enter Product details : ");
@@ -100,9 +120,7 @@ public class Admin {
 				else
 					System.out.println("Thanks for Visiting");
 				}
-	
-					}
-				} catch(UserNotFoundException | IdNotFoundException e) {
+			}catch(IdNotFoundException e) {
 				System.err.println(e.getMessage());
 			}
 		}

@@ -16,7 +16,8 @@ public interface UserServices {
 	public void register(UserDetails userdetails) throws UserAlreadyExistException;
 	public int addMoney(int amount,String userid);
 	public int checkBalance(String userid);
-	public void generateBill(List<Integer> ProdIds);
+	public int updateWalletBalance(String userid,int amount);
+	public int generateBill(int...ProdIds);
 	
 	List<ProductDetails> viewAllProducts();
 	List<ProductDetails> viewProductByCategory(String category) throws CategoryNotFoundException;

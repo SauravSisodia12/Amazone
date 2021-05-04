@@ -76,11 +76,13 @@ public class UserServicesImple implements UserServices {
 	}
 
 	@Override
-	public void generateBill(List<Integer> ProdIds) {
-		userDAO.generateBill(ProdIds);
-	
+	public int generateBill(int... ProdIds) {
+		return userDAO.generateBill(ProdIds);
+		
 	}
 
-	
-
+	@Override
+	public int updateWalletBalance(String userid, int amount) {
+		return userDAO.updateWalletBalance(userid, amount);
+	}
 }

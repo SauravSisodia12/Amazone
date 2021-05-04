@@ -11,7 +11,8 @@ public interface UserDAO {
 	public void DAOregister(UserDetails userdetails);
 	public int DAOaddMoney(int amount, String userid);
 	public int checkBalance(String userid);
-	public void generateBill(List<Integer> ProdIds);
+	public int updateWalletBalance(String userid, int amount);
+	public int generateBill(int...ProdIds);
 	
 	List<ProductDetails> findAllProducts();
 	List<ProductDetails> findProductByCategory(String category);

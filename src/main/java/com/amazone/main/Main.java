@@ -19,9 +19,9 @@ public class Main {
 		String choice = sc.next();
 		System.out.println();
 		if(choice.equalsIgnoreCase("user"))
-			user.userFunctions();
+			user.userLogin();
 		else if(choice.equalsIgnoreCase("admin"))
-			admin.adminFunctions();
+			admin.adminLogin();
 		else
 			System.out.println("Wrong input");
 			
